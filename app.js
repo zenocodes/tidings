@@ -1,7 +1,7 @@
-import express from 'express'
-import mysql from 'mysql'
-import bcrypt from 'bcrypt'
-import session from 'express-session'
+const express = require('express')
+const mysql = require('mysql')
+const bcrypt = require('bcrypt')
+const session = require('express-session')
 
 const app = express()
 
