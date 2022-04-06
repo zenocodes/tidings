@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+    <main class="access-point">
+
+        <%- include('partials/nav') %>
+
+        <form action="/signup">
+            <h2>Sign Up</h2>
+            <label for="">Email</label>
+            <input type="email" name="email" id="" value="">
+            <label for="">Fullname</label>
+            <input type="text" name="fullname" id="" value="">
+            <label for="">Gender</label>
+            <select name="" id="">
+                <option value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <label for="">Password</label>
+            <input type="password" name="password" id="" value="">
+            <label for="">Confirm Password</label>
+            <input type="password" name="confirmPassword" id="" value="">
+            <input type="submit" value="Create Account">
+            <p>Already have an account? <a href="/login">Sign In</a></p>
+        </form>
+
+    </main>
+
+<%- include('partials/footer') %>
