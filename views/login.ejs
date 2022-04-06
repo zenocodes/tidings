@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+    <main class="access-point">
+
+        <%- include('partials/nav') %>
+
+        <form action="/login">
+            <h2>Log In</h2>
+            <label for="">Email</label>
+            <input type="email" name="email" id="" value="">
+            <label for="">Password</label>
+            <input type="password" name="password" id="" value="">
+            <input type="submit" value="Log In">
+            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+        </form>
+
+    </main>
+
+<%- include('partials/footer') %>
