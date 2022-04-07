@@ -16,6 +16,16 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: false}))
 
+// app.use((req, res, next) => {
+//     if(req.session.userID === undefined) {
+//         res.locals.isLoggedIn = false
+//     } else {
+//         res.locals.isLoggedIn = true
+//         res.locals.username = req.session.username
+//     }
+//     next()
+// })
+
 
 app.get('/', (req, res) => {
     res.render('home.ejs')
@@ -25,12 +35,24 @@ app.get('/about', (req, res) => {
     res.render('about-us.ejs')
 })
 
+app.get('/new-tyd', (req, res) => {
+    res.render('new-tyd.ejs')
+})
+
+app.post('/new-tyd', (req, res) => {
+
+})
+
 app.get('/login', (req, res) => {
-    let user = {
-        email: '',
-        password: ''
+    if(res.locals.isLoggedIn) {
+        res.redirect('/tyds')
+    } else {
+        let user = {
+            email: '',
+            password: ''
+        }
+        res.render('login.ejs', {error: false, user: user})
     }
-    res.render('login.ejs', {error: false, user: user})
 })
 
 app.post('/login', (req, res) => {
@@ -45,6 +67,8 @@ app.post('/login', (req, res) => {
             if (results.length > 0) {
                 bcrypt.compare(user.password, results[0].password, (error, isEqual) => {
                     if(isEqual) {
+                        req.session.userID = results[0].id 
+                        req.session.username = results[0].fullname.split(' ').toLowerCase()
                         res.redirect('/')
                     } else {
                         let message = 'Email/Password mistmatch.'
@@ -63,14 +87,18 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/signup', (req, res) => {
-    let user = {
-        email: '',
-        fullname: '',
-        gender: '',
-        password: '',
-        confirmPassword: ''
+    if(res.locals.isLoggedIn) {
+        res.redirect('/tyds')
+    } else {
+        let user = {
+            email: '',
+            fullname: '',
+            gender: '',
+            password: '',
+            confirmPassword: ''
+        }
+        res.render('signup.ejs', {error:false, user: user})
     }
-    res.render('signup.ejs', {error:false, user: user})
 })
 
 app.post('/signup', (req, res) => {
@@ -104,7 +132,6 @@ app.post('/signup', (req, res) => {
         )
     } else {
         let message = 'Password & Confirm Password do not match.'
-        console.log(user)
         res.render('signup.ejs', {error: true, message: message, user: user})
     }
 
