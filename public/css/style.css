@@ -130,4 +130,20 @@ header .nav-link a {
 
 .tyd {
     border-bottom: 1px solid #1383a8;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.tyd div {
+    display: flex;
+}
+
+.tyd #upper img {
+    width: 100px;
+    height: 100px;
+}
+
+.tyd #upper div {
+    display: flex;
+    flex-direction: column;
 }
