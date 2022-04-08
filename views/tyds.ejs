@@ -10,11 +10,24 @@
             <% for(let tyd of tyds) { %>
 
                 <% let username = tyd.fullname.split(' ')[0].toLowerCase() %>
+                <% let avatar = Math.floor(Math.random() * 5) %>
 
                 <div class="tyd">
-                    <h3>@<%= username %></h3>
-                    <p><%= tyd.tyd %></p>
-                    <small><%= tyd.datePosted %></small>
+                    <div id="upper">
+                        <img src="/images/avatars/<%= `${avatar}.png` %>" alt="">
+                        <div>
+                            <h3>@<%= username %></h3>
+                            <p><%= tyd.tyd %></p>
+                        </div>
+                    </div>
+                    
+                    <div id="lower">
+                        <small><%= tyd.datePosted %></small>
+                        <div>
+                            <img src="" alt="">
+                            <span class="likes"></span>
+                        </div>
+                    </div>                      
                 </div>
 
             <% } %>
