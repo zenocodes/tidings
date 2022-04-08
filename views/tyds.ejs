@@ -22,10 +22,10 @@
                     </div>
                     
                     <div id="lower">
-                        <small><%= tyd.datePosted %></small>
+                        <p><%= tyd.datePosted.toString().split(' ').slice(0, 5).join(' ') %></p>
                         <div>
-                            <img src="" alt="">
-                            <span class="likes"></span>
+                            <img src="/images/icons/heart.svg" alt="">
+                            <span class="likes"><%= avatar + 15 %></span>
                         </div>
                     </div>                      
                 </div>
