@@ -62,7 +62,7 @@ app.post('/new-tyd', (req, res) => {
 app.get('/tyds', (req, res) => {
     if(res.locals.isLoggedIn) {
         connection.query(
-            'SELECT * FROM tyds JOIN users ON tyds.userID = users.id',
+            'SELECT fullname, tyds.id AS tydID, tyd, likes, datePosted FROM tyds JOIN users ON tyds.userID = users.id ORDER BY datePosted DESC',
             (error, results) => {
                 res.render('tyds.ejs', {tyds: results})
             }
@@ -70,6 +70,45 @@ app.get('/tyds', (req, res) => {
     } else {
         res.redirect('/login')
     }
+})
+
+app.post('/like/:id', (req, res) => {
+    connection.query(
+        'SELECT * FROM liked_tyds WHERE tydID = ?',
+        [parseInt(req.params.id)],
+        (error, results) => {
+            if(results.length > 0) {
+                connection.query(
+                    'DELETE FROM liked_tyds WHERE tydID = ? AND userID = ?',
+                    [parseInt(req.params.id), req.session.userId],
+                    (error, results) => {
+                        connection.query(
+                            'UPDATE tyds SET likes = likes - 1 WHERE id = ?',
+                            [parseInt(req.params.id)],
+                            (error, results) => {
+                                res.redirect('/tyds')
+                            }
+                        )
+                    }
+                )
+
+            } else {
+                connection.query(
+                    'INSERT INTO liked_tyds (tydID, userID) VALUES (?,?)',
+                    [parseInt(req.params.id), req.session.userId],
+                    (error, results) => {
+                        connection.query(
+                            'UPDATE tyds SET likes = likes + 1 WHERE id = ?',
+                            [parseInt(req.params.id)], 
+                            (error, results) => {
+                                res.redirect('/tyds')
+                            }
+                        )
+                    }
+                )
+            }
+        }
+    )
 })
 
 app.get('/login', (req, res) => {
