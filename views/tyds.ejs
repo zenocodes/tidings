@@ -22,11 +22,17 @@
                     </div>
                     
                     <div id="lower">
-                        <p><%= tyd.datePosted.toString().split(' ').slice(0, 5).join(' ') %></p>
                         <div>
-                            <img src="/images/icons/heart.svg" alt="">
-                            <span class="likes"><%= avatar + 15 %></span>
+                            <form action="/like/<%= tyd.tydID %>" method="post">
+                                <button type="submit" class="likeBtn">
+                                    <img src="/images/icons/heart.svg" alt="" >
+                                </button>
+                            </form>
+                            <% if(tyd.likes) { %>
+                                <span class="likes"><%= tyd.likes %></span>
+                            <% } %>
                         </div>
+                        <p><%= tyd.datePosted.toString().split(' ').slice(0, 5).join(' ') %></p>
                     </div>                      
                 </div>
 
