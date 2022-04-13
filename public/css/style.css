@@ -137,7 +137,7 @@ header .nav-link a {
 .tyd div {
     display: flex;
     margin-bottom: 4px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .tyd #upper img {
@@ -157,4 +157,13 @@ header .nav-link a {
 
 .tyd .likes {
     margin-left: 5px;
+}
+
+.tyd #lower {
+    justify-content: space-between;
+}
+
+.tyd .likeBtn {
+    background-color: #fff;
+    border: 0;
 }
