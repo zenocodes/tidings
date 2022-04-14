@@ -64,7 +64,14 @@ app.get('/tyds', (req, res) => {
         connection.query(
             'SELECT fullname, tyds.id AS tydID, tyd, likes, datePosted FROM tyds JOIN users ON tyds.userID = users.id ORDER BY datePosted DESC',
             (error, results) => {
-                res.render('tyds.ejs', {tyds: results})
+                connection.query(
+                    'SELECT * FROM liked_tyds WHERE userID = ?',
+                    [req.session.userId],
+                    (error, likes) => {
+                        res.render('tyds.ejs', {tyds: results, likes: likes})
+                    }
+                )
+                
             }
         )
     } else {
