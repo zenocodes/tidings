@@ -7,6 +7,11 @@
         <div class="container">
             <p>Welcome, <%= locals.username %></p>
 
+            <div id="tab">
+                <button class="tab" id="tyd-tab">Tyds</button>
+                <button class="tab" id="like-tab">Likes</button>
+            </div>
+
             <% for(let tyd of tyds) { %>
 
                 <% let username = tyd.fullname.split(' ')[0].toLowerCase() %>
@@ -25,7 +30,13 @@
                         <div>
                             <form action="/like/<%= tyd.tydID %>" method="post">
                                 <button type="submit" class="likeBtn">
-                                    <img src="/images/icons/heart.svg" alt="" >
+
+                                    <% if(likes.some(like => like.tydID === tyd.tydID)) { %>
+                                        <img src="/images/icons/heart-fill.svg" alt="" >
+                                    <% } else { %>
+                                        <img src="/images/icons/heart.svg" alt="" >
+                                    <% } %>
+
                                 </button>
                             </form>
                             <% if(tyd.likes) { %>
@@ -36,9 +47,65 @@
                     </div>                      
                 </div>
 
+                <% if(likes.some(like => like.tydID === tyd.tydID)){ %>
+
+                    <div class="like">
+                        <div id="upper">
+                            <img src="/images/avatars/<%= `${avatar}.png` %>" alt="">
+                            <div>
+                                <h3>@<%= username %></h3>
+                                <p><%= tyd.tyd %></p>
+                            </div>
+                        </div>
+                        
+                        <div id="lower">
+                            <div>
+                                <form action="/like/<%= tyd.tydID %>" method="post">
+                                    <button type="submit" class="likeBtn">
+    
+                                        <% if(likes.some(like => like.tydID === tyd.tydID)) { %>
+                                            <img src="/images/icons/heart-fill.svg" alt="" >
+                                        <% } else { %>
+                                            <img src="/images/icons/heart.svg" alt="" >
+                                        <% } %>
+    
+                                    </button>
+                                </form>
+                                <% if(tyd.likes) { %>
+                                    <span class="likes"><%= tyd.likes %></span>
+                                <% } %>
+                            </div>
+                            <p><%= tyd.datePosted.toString().split(' ').slice(0, 5).join(' ') %></p>
+                        </div>                      
+                    </div>
+
+                <% } %>
+
             <% } %>
         </div>
 
     </main>
+
+    <script>
+
+        let tyds = document.querySelectorAll('.tyd')
+        let likes = document.querySelectorAll('.like')
+
+        let tabs = document.querySelectorAll('.tab')
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                if(tab.textContent === 'Tyds') {
+                    tyds.forEach(tyd => tyd.style.display = 'block')
+                    likes.forEach(like => like.style.display = 'none')
+                } else {
+                    tyds.forEach(tyd => tyd.style.display = 'none')
+                    likes.forEach(like => like.style.display = 'block')
+                }
+                tabs.forEach(tab => tab.style.border = 0)
+                tab.style.borderBottom = '1px solid #1383a8'
+            })
+        })
+
+    </script>
 
 <%- include('partials/footer') %>
