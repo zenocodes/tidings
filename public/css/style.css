@@ -188,3 +188,8 @@ header .nav-link a {
     border: 0;
 }
 
+#about-tyds img {
+    width: 75%;
+    display: block;
+    margin: 0 auto;
+}
